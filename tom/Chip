@@ -1,0 +1,11 @@
+class Chip
+{
+  int Chip_Width;
+  int Chip_Height;
+  
+  Chip(int Chip_Width, int Chip_Height)
+  {
+    this.Chip_Width = Chip_Width;
+    this.Chip_Height = Chip_Height;
+  }
+}

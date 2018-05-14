@@ -1,11 +1,20 @@
 class Chip
 {
+  int x;
+  int y;
   int Chip_Width;
   int Chip_Height;
   
-  Chip(int Chip_Width, int Chip_Height)
+  Chip(int x, int y, int Chip_Width, int Chip_Height)
   {
+    this.x = x;
+    this.y = y;
     this.Chip_Width = Chip_Width;
     this.Chip_Height = Chip_Height;
+  }
+  
+  void show()
+  {
+    rect(x, y, Chip_Width, Chip_Height);
   }
 }

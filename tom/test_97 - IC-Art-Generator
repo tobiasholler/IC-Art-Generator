@@ -1,5 +1,5 @@
-int Grid_Size = 100;
-int Grid_Dense = 10;
+int Grid_Dense;
+int Grid_Size;
 Chip chip;
 
 void setup()
@@ -8,7 +8,10 @@ void setup()
   background(255);
   noSmooth();
   
-  chip = new Chip(100, 100, Grid_Dense*5, Grid_Dense*4);
+  Grid_Dense = 10;
+  Grid_Size = ((width+height)/2)/Grid_Dense;
+  
+  chip = new Chip(Grid_Dense*25, Grid_Dense*25, Grid_Dense*5, Grid_Dense*5);
 }
 
 void draw()

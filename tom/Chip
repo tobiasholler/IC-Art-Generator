@@ -1,20 +1,27 @@
 class Chip
 {
-  int x;
-  int y;
+  PVector Pos;
+  PVector Kontaktpunkt[];
+  int Grid_Dense;
+  int Grid_Size;
   int Chip_Width;
   int Chip_Height;
   
   Chip(int x, int y, int Chip_Width, int Chip_Height)
   {
-    this.x = x;
-    this.y = y;
+    this.Pos = new PVector(x, y);
     this.Chip_Width = Chip_Width;
     this.Chip_Height = Chip_Height;
   }
   
+  void setRefGrid(int Grid_Dense, int Grid_Size)
+  {
+    this.Grid_Dense = Grid_Dense;
+    this.Grid_Size = Grid_Size;
+  }
+  
   void show()
   {
-    rect(x, y, Chip_Width, Chip_Height);
+    rect(Pos.x, Pos.y, Chip_Width, Chip_Height);
   }
 }

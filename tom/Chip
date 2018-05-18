@@ -2,11 +2,12 @@ class Chip
 {
   PVector Pos;
   PVector Kontaktpunkt[]; // == KP
-  int KP_pro_Chipseite;
   int Grid_Dense;
   int Grid_Size;
   int Chip_Width;
   int Chip_Height;
+  int KP_pro_Chipseite;
+  Trace trace[];
   
   Chip(int x, int y, int Chip_Width, int Chip_Height)
   {
@@ -19,14 +20,14 @@ class Chip
     this.KP_pro_Chipseite = 0;
   }
   
-  // Eingabe eines Referenzgrids für klasseninterne Berechnungen
+  //Eingabe eines Referenzgrids für klasseninterne Berechnungen
   void setRefGrid(int Grid_Dense, int Grid_Size)
   {
     this.Grid_Dense = Grid_Dense;
     this.Grid_Size = Grid_Size;
   }
   
-  // Init Kontaktpunkte
+  //Init Kontaktpunkte
   void initKP()
   {
     KP_pro_Chipseite = (Chip_Width/Grid_Dense)-1;
@@ -54,7 +55,6 @@ class Chip
             //Rechts
             Kontaktpunkt[i*4+j] = new PVector(Pos.x+Chip_Width, Pos.y+Grid_Dense*(j+1));
             break;
-          
         }
       }
     }
@@ -63,14 +63,21 @@ class Chip
   void show()
   {
     rect(Pos.x, Pos.y, Chip_Width, Chip_Height);
-    println(Kontaktpunkt.length);
+    //println(Kontaktpunkt.length);
   }
   
   void show_KP()
   {
+    /*
     for(int i = 0; i < Kontaktpunkt.length; i++)
     {
       ellipse(Kontaktpunkt[i].x, Kontaktpunkt[i].y, Grid_Dense/2, Grid_Dense/2);
+    }
+    */
+    
+    for(PVector i : Kontaktpunkt)
+    {
+      ellipse(i.x, i.y, Grid_Dense/2, Grid_Dense/2);
     }
   }
 }

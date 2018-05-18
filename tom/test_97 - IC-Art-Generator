@@ -12,6 +12,8 @@ void setup()
   Grid_Size = ((width+height)/2)/Grid_Dense;
   
   chip = new Chip(Grid_Dense*25, Grid_Dense*25, Grid_Dense*5, Grid_Dense*5);
+  chip.setRefGrid(Grid_Dense, Grid_Size);
+  chip.initKP();
 }
 
 void draw()
@@ -21,6 +23,7 @@ void draw()
   drawGrid(Grid_Size, Grid_Dense);
   
   chip.show();
+  chip.show_KP();
 }
 
 void drawGrid(int GridSize, int GridDense)

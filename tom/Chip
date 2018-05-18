@@ -1,7 +1,9 @@
 class Chip
 {
   PVector Pos;
-  PVector Kontaktpunkt[];
+  PVector Kontaktpunkt[]; // == KP
+  int KP_pro_Chipseite;
+  int KP_Endpunkt_pro_Chipseite[];
   int Grid_Dense;
   int Grid_Size;
   int Chip_Width;
@@ -12,16 +14,67 @@ class Chip
     this.Pos = new PVector(x, y);
     this.Chip_Width = Chip_Width;
     this.Chip_Height = Chip_Height;
+    //Just to be safe
+    this.Grid_Dense = 0;
+    this.Grid_Size = 0;
+    this.KP_pro_Chipseite = 0;
+    this.KP_Endpunkt_pro_Chipseite = new int[4];
   }
   
+  // Eingabe eines Referenzgrids für klasseninterne Berechnungen
   void setRefGrid(int Grid_Dense, int Grid_Size)
   {
     this.Grid_Dense = Grid_Dense;
     this.Grid_Size = Grid_Size;
   }
   
+  // Init Kontaktpunkte
+  void initKP()
+  {
+    KP_pro_Chipseite = (Chip_Width/Grid_Dense)-1;
+    Kontaktpunkt = new PVector[KP_pro_Chipseite*4];
+    
+    for(int i = 0; i < KP_Endpunkt_pro_Chipseite.length; i++)
+    {
+      KP_Endpunkt_pro_Chipseite[i] = KP_pro_Chipseite*(i+1);
+    }
+    
+    //Oben
+    for(int i = 0; i < KP_Endpunkt_pro_Chipseite[0]; i++)
+    {
+      Kontaktpunkt[i] = new PVector(Pos.x+Grid_Dense*(i+1), Pos.y);
+    }
+    
+    //Links
+    for(int i = KP_Endpunkt_pro_Chipseite[0]; i < KP_Endpunkt_pro_Chipseite[1]; i++)
+    {
+      Kontaktpunkt[i] = new PVector(Pos.x+Grid_Dense*(i+1), Pos.y);
+    }
+    
+    //Unten
+    for(int i = KP_Endpunkt_pro_Chipseite[1]; i < KP_Endpunkt_pro_Chipseite[2]; i++)
+    {
+      Kontaktpunkt[i] = new PVector(Pos.x+Grid_Dense*(i+1), Pos.y);
+    }
+    
+    //Rechts
+    for(int i = KP_Endpunkt_pro_Chipseite[2]; i < KP_Endpunkt_pro_Chipseite[3]; i++)
+    {
+      Kontaktpunkt[i] = new PVector(Pos.x+Grid_Dense*(i+1), Pos.y);
+    }
+  }
+  
   void show()
   {
     rect(Pos.x, Pos.y, Chip_Width, Chip_Height);
+    println(Kontaktpunkt.length);
+  }
+  
+  void show_KP()
+  {
+    for(int i = 0; i < Kontaktpunkt.length; i++)
+    {
+      ellipse(Kontaktpunkt[i].x, Kontaktpunkt[i].y, 5, 5);
+    }
   }
 }

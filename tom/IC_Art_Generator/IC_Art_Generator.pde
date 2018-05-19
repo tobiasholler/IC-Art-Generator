@@ -1,6 +1,6 @@
-int Grid_Dense;
-int Grid_Size;
+int Grid_Ref_Dense;
 Chip chip;
+Grid grid;
 
 void setup()
 {
@@ -8,11 +8,10 @@ void setup()
   background(255);
   noSmooth();
   
-  Grid_Dense = 10;
-  Grid_Size = ((width+height)/2)/Grid_Dense;
-  
-  chip = new Chip(Grid_Dense*25, Grid_Dense*25, Grid_Dense*5, Grid_Dense*5);
-  chip.setRefGrid(Grid_Dense, Grid_Size);
+  Grid_Ref_Dense = 15;
+  grid = new Grid(Grid_Ref_Dense, (((width+height)/2)/Grid_Ref_Dense));
+  chip = new Chip(grid.getDense()*25, grid.getDense()*25, grid.getDense()*5, grid.getDense()*5);
+  chip.setRefGrid(grid.getDense(), grid.getSize());
   chip.initKP();
 }
 
@@ -20,10 +19,8 @@ void draw()
 {
   background(255);
   
-  drawGrid(Grid_Size, Grid_Dense);
-  
-  chip.show();
-  chip.show_KP();
+  grid.show();
+  chip.show_All();
 }
 
 void drawGrid(int GridSize, int GridDense)

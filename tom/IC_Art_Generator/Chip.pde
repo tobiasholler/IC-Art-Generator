@@ -1,22 +1,23 @@
 class Chip
 {
-  PVector Pos;
-  PVector Kontaktpunkt[]; // == KP
+  PVector pos;
+  PVector kontaktpunkt[]; // == kp
   Grid grid;
-  int Chip_Width;
-  int Chip_Height;
-  int KP_pro_Chipseite;
+  int chip_width;
+  int chip_height;
+  int kp_pro_chipseite;
   Trace trace[];
   
-  Chip(int x, int y, int Chip_Width, int Chip_Height)
+  Chip(int x, int y, int chip_width, int chip_height)
   {
-    this.Pos = new PVector(x, y);
-    this.Chip_Width = Chip_Width;
-    this.Chip_Height = Chip_Height;
+    this.pos = new PVector(x, y);
+    this.chip_width = chip_width;
+    this.chip_height = chip_height;
+    
     //Just to be safe
     this.grid = new Grid(0, 0);
-    this.KP_pro_Chipseite = 0;
-    this.trace = new Trace[KP_pro_Chipseite*4];
+    this.kp_pro_chipseite = 0;
+    this.trace = new Trace[kp_pro_chipseite*4];
   }
   
   //Eingabe eines Referenzgrids für klasseninterne Berechnungen
@@ -28,30 +29,30 @@ class Chip
   //Init Kontaktpunkte
   void initKP()
   {
-    KP_pro_Chipseite = (Chip_Width/grid.getDense())-1;
-    Kontaktpunkt = new PVector[KP_pro_Chipseite*4];
+    kp_pro_chipseite = (chip_width/grid.getDense())-1;
+    kontaktpunkt = new PVector[kp_pro_chipseite*4];
     
-    for(int i = 0; i < KP_pro_Chipseite; i++)
+    for(int i = 0; i < kp_pro_chipseite; i++)
     {
-      for(int j = 0; j < KP_pro_Chipseite; j++)
+      for(int j = 0; j < kp_pro_chipseite; j++)
       {
         switch(i)
         {
           case 0:
             //Oben
-            Kontaktpunkt[i*4+j] = new PVector(Pos.x+grid.getDense()*(j+1), Pos.y);
+            kontaktpunkt[i*4+j] = new PVector(pos.x+grid.getDense()*(j+1), pos.y);
             break;
           case 1:
             //Unten
-            Kontaktpunkt[i*4+j] = new PVector(Pos.x+grid.getDense()*(j+1), Pos.y+Chip_Height);
+            kontaktpunkt[i*4+j] = new PVector(pos.x+grid.getDense()*(j+1), pos.y+chip_height);
             break;
           case 2:
             //Links
-            Kontaktpunkt[i*4+j] = new PVector(Pos.x, Pos.y+grid.getDense()*(j+1));
+            kontaktpunkt[i*4+j] = new PVector(pos.x, pos.y+grid.getDense()*(j+1));
             break;
           case 3:
             //Rechts
-            Kontaktpunkt[i*4+j] = new PVector(Pos.x+Chip_Width, Pos.y+grid.getDense()*(j+1));
+            kontaktpunkt[i*4+j] = new PVector(pos.x+chip_width, pos.y+grid.getDense()*(j+1));
             break;
         }
       }
@@ -63,7 +64,7 @@ class Chip
   {
     for(int i = 0; i < trace.length; i++)
     {
-      trace[i] = new Trace(Kontaktpunkt[i], 10);
+      trace[i] = new Trace(kontaktpunkt[i], 10);
     }
   }
   
@@ -76,9 +77,9 @@ class Chip
   }
   
   //Zeig mir den Chip
-  void show_C(){ rect(Pos.x, Pos.y, Chip_Width, Chip_Height); }
+  void show_C(){ rect(pos.x, pos.y, chip_width, chip_height); }
   //Zeig mir die Kontaktpunkte
-  void show_KP(){ for(PVector pv : Kontaktpunkt){ ellipse(pv.x, pv.y, grid.getDense()/2, grid.getDense()/2); } }
+  void show_KP(){ for(PVector pv : kontaktpunkt){ ellipse(pv.x, pv.y, grid.getDense()/2, grid.getDense()/2); } }
   //Zeig mir die Traces/Spuren
   void show_T(){ for(Trace t : trace){ t.show(); } }
 }

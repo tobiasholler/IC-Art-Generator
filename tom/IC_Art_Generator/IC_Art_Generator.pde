@@ -1,6 +1,7 @@
-int Grid_Ref_Dense;
+int grid_ref_dense;
 Chip chip;
 Grid grid;
+TraceControlGrid trace_control_grid;
 
 void setup()
 {
@@ -8,11 +9,12 @@ void setup()
   background(255);
   noSmooth();
   
-  Grid_Ref_Dense = 15;
-  grid = new Grid(Grid_Ref_Dense, (((width+height)/2)/Grid_Ref_Dense));
+  grid_ref_dense = 15;
+  grid = new Grid(grid_ref_dense, width/grid_ref_dense);
   chip = new Chip(grid.getDense()*25, grid.getDense()*25, grid.getDense()*5, grid.getDense()*5);
   chip.setRefGrid(grid.getDense(), grid.getSize());
   chip.initKP();
+  trace_control_grid = new TraceControlGrid(grid);
 }
 
 void draw()
@@ -21,15 +23,4 @@ void draw()
   
   grid.show();
   chip.show_All();
-}
-
-void drawGrid(int GridSize, int GridDense)
-{
-  for(int i = 0; i < GridSize; i++)
-  {
-    for(int j = 0; j < GridSize; j++)
-    {
-      point(i*GridDense, j*GridDense);
-    }
-  }
 }

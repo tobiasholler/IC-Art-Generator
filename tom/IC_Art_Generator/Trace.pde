@@ -2,20 +2,22 @@ class Trace
 {
   //PVector Pos;
   PVector Spur[];
-  int Trace_Max_Length;
-  int Current_Length;
+  //PVector Base_Direction;
+  //Oben  :  0,  1
+  //Unten :  0, -1
+  //Links : -1,  0
+  //Rechts:  1,  0
+  int trace_max_length;
+  int current_length;
   Grid grid;
   
   
   Trace(PVector Pos, int TML)
   {
-    this.Trace_Max_Length = TML;
-    Spur = new PVector[Trace_Max_Length];
-    for(PVector i : Spur)
-    {
-      i = new PVector(Pos.x, Pos.y);
-    }
-    Current_Length = 0;
+    this.trace_max_length = TML;
+    Spur = new PVector[trace_max_length];
+    for(PVector i : Spur){ i = new PVector(Pos.x, Pos.y); }
+    current_length = 0;
     
     //Just to be safe
     this.grid = new Grid(0, 0);

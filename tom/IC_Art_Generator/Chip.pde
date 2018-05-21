@@ -64,7 +64,7 @@ class Chip
   {
     for(int i = 0; i < trace.length; i++)
     {
-      trace[i] = new Trace(kontaktpunkt[i], 10);
+      trace[i] = new Trace(kontaktpunkt[i], 10, i);
     }
   }
   

@@ -9,15 +9,17 @@ class Trace
   //Rechts:  1,  0
   int trace_max_length;
   int current_length;
+  int trace_num;
   Grid grid;
   
   
-  Trace(PVector Pos, int TML)
+  Trace(PVector Pos, int TML, int trace_num)
   {
     this.trace_max_length = TML;
     Spur = new PVector[trace_max_length];
     for(PVector i : Spur){ i = new PVector(Pos.x, Pos.y); }
     current_length = 0;
+    this.trace_num = trace_num;
     
     //Just to be safe
     this.grid = new Grid(0, 0);
@@ -28,6 +30,8 @@ class Trace
   {
     this.grid.setGridParameter(Grid_Dense, Grid_Size);
   }
+  
+  int getTraceNumber(){ return trace_num; }
   
   void show()
   {

@@ -23,4 +23,5 @@ void draw()
   
   grid.show();
   chip.show_All();
+  trace_control_grid.show();
 }

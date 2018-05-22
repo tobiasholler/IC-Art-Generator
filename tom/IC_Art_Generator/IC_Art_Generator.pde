@@ -1,19 +1,19 @@
 int grid_ref_dense;
 Chip chip;
 Grid grid;
-TraceControlGrid trace_control_grid;
+TraceControlGrid tcg; //trace_control_grid
 
 void setup()
 {
   size(800, 800);
   background(255);
   noSmooth();
-  noLoop();
+  //noLoop();
   
-  grid_ref_dense = 16;
+  grid_ref_dense = 25;
   grid = new Grid(grid_ref_dense, width/grid_ref_dense);
-  chip = new Chip(grid.getDense()*25, grid.getDense()*25, grid.getDense()*5, grid.getDense()*5, grid);
-  trace_control_grid = new TraceControlGrid(grid);
+  tcg = new TraceControlGrid(grid);
+  chip = new Chip(tcg.getDense()*10, tcg.getDense()*15, tcg.getDense()*5, tcg.getDense()*5, grid, tcg);
 }
 
 void draw()
@@ -22,5 +22,5 @@ void draw()
   
   chip.show_All();
   grid.show();
-  trace_control_grid.show();
+  tcg.show();
 }

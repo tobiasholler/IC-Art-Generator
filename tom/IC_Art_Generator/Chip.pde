@@ -6,15 +6,34 @@ class Chip
   private PVector kontaktpunkt[]; // == kp
   //width und height des Chips
   private PVector chip_dim;
-  //
   private PVector kp_pro_chipseite;
   private Trace trace[];
-  //TraceControlGrid tcg;
+  private PVector base_direction[];
   
-  public Chip(int x, int y, int chip_width, int chip_height, Grid grid, TraceControlGrid tcg)
+  public Chip(int x, int y, int chip_width, int chip_height, TraceControlGrid tcg)
   {
     this.pos = new PVector(x, y);
     this.chip_dim = new PVector(chip_width, chip_height);
+    this.base_direction = new PVector[5];
+    //oben
+    base_direction[0] = new PVector(0, -1);
+    //unten
+    base_direction[1] = new PVector(0, 1);
+    //links
+    base_direction[2] = new PVector(-1, 0);
+    //rechts
+    base_direction[3] = new PVector(1, 0);
+    //"default" -> in case something goes wrong
+    base_direction[4] = new PVector(0, 0);
+    
+    //Update tcg
+    for(int i = 0; i <= chip_width/tcg.getDense(); i++)
+    {
+      for(int j = 0; j <= chip_height/tcg.getDense(); j++)
+      {
+        tcg.setPointInTCG(x/tcg.getDense()+i, y/tcg.getDense()+j, -2);
+      }
+    }
     
     initKP(tcg);
     initT(tcg);
@@ -49,18 +68,50 @@ class Chip
     
     for(int i = 0; i < trace.length; i++)
     {
-      trace[i] = new Trace(kontaktpunkt[i], 10, i, tcg);
+      //oben
+      if(i >= 0 && i < kp_pro_chipseite.x)
+      {
+        trace[i] = new Trace(kontaktpunkt[i], base_direction[0], 10, i, tcg);
+      }
+      //unten
+      else if(i >= kp_pro_chipseite.x && i < kp_pro_chipseite.x*2)
+      {
+        trace[i] = new Trace(kontaktpunkt[i], base_direction[1], 10, i, tcg);
+      }
+      //links
+      else if(i >= kp_pro_chipseite.x*2 && i < kp_pro_chipseite.x*2+kp_pro_chipseite.y)
+      {
+        trace[i] = new Trace(kontaktpunkt[i], base_direction[2], 10, i, tcg);
+      }
+      //rechts
+      else if(i >= (kp_pro_chipseite.x*2+kp_pro_chipseite.y) && i < kp_pro_chipseite.x*2+kp_pro_chipseite.y*2)
+      {
+        trace[i] = new Trace(kontaktpunkt[i], base_direction[3], 10, i, tcg);
+      }
+      else
+      {
+        trace[i] = new Trace(kontaktpunkt[i], base_direction[4], 10, i, tcg);
+      }
+      
     }
     
     println("initT: DONE");
   }
   
+  public void genTrace(TraceControlGrid tcg)
+  {
+    for(int i = 0; i < trace.length; i++)
+    {
+      trace[i].genTrace(tcg);
+    }
+  }
+  
   //Zeig mir alles
-  void show_All()
+  public void show_All(TraceControlGrid tcg)
   {
     show_C();
     show_KP();
-    show_T();
+    show_T(tcg);
   }
   
   //Zeig mir den Chip
@@ -72,8 +123,17 @@ class Chip
     rect(pos.x-2           , pos.y-2+chip_dim.y, 4, 4);
     rect(pos.x-2+chip_dim.x, pos.y-2+chip_dim.y, 4, 4);
   }
+  
   //Zeig mir die Kontaktpunkte
   public void show_KP(){ for(PVector pv : kontaktpunkt){ ellipse(pv.x, pv.y, tcg.getDense()/2, tcg.getDense()/2); } }
+  
   //Zeig mir die Traces/Spuren
-  public void show_T(){ for(Trace t : trace){ t.show(); } }
+  public void show_T(TraceControlGrid tcg)
+  {
+    for(Trace t : trace)
+    {
+      t.show();
+      t.showBaseVec(tcg);
+    }
+  }
 }

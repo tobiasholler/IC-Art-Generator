@@ -7,6 +7,7 @@ class TraceControlGrid
   {
     this.grid = new Grid(grid);
     //Nummeriert von -1 für Frei bis +Unendlich
+    //-2 für Chip?
     trace_control_grid = new int[width/grid.getDense()][height/grid.getDense()];
     for(int i = 0; i < trace_control_grid.length; i++)
     {
@@ -45,6 +46,12 @@ class TraceControlGrid
         if(trace_control_grid[i][j] == -1)
         {
           fill(0);
+          text(trace_control_grid[i][j], i*grid.getDense()+5, j*grid.getDense()+10);
+          fill(255);
+        }
+        else if(trace_control_grid[i][j] == -2)
+        {
+          fill(200, 0, 0);
           text(trace_control_grid[i][j], i*grid.getDense()+5, j*grid.getDense()+10);
           fill(255);
         }
